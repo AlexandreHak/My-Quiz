@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Quiz - {{ category.name }}{% endblock %}
+
+{% block body %}
+
+  <h2 id="category">{{ category.name }}</h2>
+  <h3>{{ question.question }}</h3>
+
+
+  <form id="answers-block">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <input type="hidden" id="is-logged-in" name="is-logged-in" value="{{ app.user.id }}">
+    {% endif %}
+    <input type="hidden" name="question-id" value="{{ question.id }}">
+    {% for answer in answers %}
+        <label for="{{ answer.id }}">{{ answer.reponse }}</label>
+        <input type="radio" name="answer" id="{{ answer.id }}" value="{{ answer.reponse }}">
+    {% endfor %}
+    <input type="submit" id="submit-answer">
+  </form>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}

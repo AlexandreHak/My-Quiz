@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{{ path('home') }}">My Quiz</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      
+        {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Admin
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="{{ path('categorie_index') }}">Edit Quiz</a>
+                    <a class="dropdown-item" href="{{ path('user_index') }}">Edit Users</a>
+                </div>
+            </li>
+        {% endif %}
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ app.user.username }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
+                </div>
+            </li>
+        {% else %}
+            <li class="nav-item active">    
+                <a class="nav-link" href="{{ path('login') }}">Login</a>
+            </li>
+            <li class="nav-item active">                
+                <a class="nav-link" href="{{ path('user_registration') }}">Register</a>
+            </li>
+        {% endif %}
+    </ul>
+  </div>
+</nav>

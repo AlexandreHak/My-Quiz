@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Quiz - {{ categorie.name }}{% endblock %}
+
+{% block body %}
+    <input type="hidden" id="questions-count" value="{{ questionsCount }}"></input>
+    
+    <div class="container-fluid col-8">
+        <div class="row justify-content-center mb-5">
+            <div id="scoreboard-header">
+                <h2>Category: <span class="bg-dark text-white">{{ categorie.name }}</span></h2>
+                <h3>Score: <span id="score" class="bg-info text-white"></span></h3>
+            </div>
+        </div>
+
+        {% for history in histories %}
+            <div class="card my-3">
+                <div class="card-body">
+                    <h5 class="card-title question">{{ history.question.question }}</h5>
+                    {% for answer in history.question.reponses.values %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input {{ answer.reponseExpected ? 'is-valid' : '' }}" type="radio" id="{{ answer.id }}" value="{{ answer.reponse }}" disabled {{ (history.answer.id == answer.id) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="{{ answer.id }}">
+                                {{ answer.reponse }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="card-footer text-muted">
+                    {{ history.createdAt|date("F jS \\a\\t g:ia", "Europe/Paris") }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ asset('js/scoreboard.js') }}"></script>    
+{% endblock %}
